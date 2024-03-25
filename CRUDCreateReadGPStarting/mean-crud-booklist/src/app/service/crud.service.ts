@@ -39,6 +39,13 @@ export class CrudService {
 			.pipe(catchError(this.handleError));
 	}
 
+	UpdateBook(id: any, data: Book): Observable<any> {
+		let API_URL = `${this.REST_API}/update-book/${id}`;
+		return this.httpClient
+			.put(API_URL, data)
+			.pipe(catchError(this.handleError));
+	}
+
 	// Error
 	handleError(error: HttpErrorResponse) {
 		let errorMessage = '';

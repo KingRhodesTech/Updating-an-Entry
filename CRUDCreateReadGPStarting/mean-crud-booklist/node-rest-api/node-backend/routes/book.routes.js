@@ -15,6 +15,7 @@ bookRoute.route('/').get((req, res) => {
 		});
 });
 
+// Add a Book
 bookRoute.route('/add-book').post((req, res) => {
 	Book.create(req.body)
 		.then(() => {
@@ -26,6 +27,7 @@ bookRoute.route('/add-book').post((req, res) => {
 		});
 });
 
+// Delete a Book
 bookRoute.route('/delete-book/:id').delete((req, res) => {
 	console.log(`Preparing to delete: ${req.params.id}`);
 	Book.findByIdAndDelete(req.params.id)
@@ -35,6 +37,19 @@ bookRoute.route('/delete-book/:id').delete((req, res) => {
 		})
 		.catch((error) => {
 			console.error(`Could not delete book: ${error}`);
+		});
+});
+
+// Update a Book
+bookRoute.route('/update-book/:id').put((req, res) => {
+	console.log(`Preparing to update book: ${req.params.id}`);
+	Book.findByIdAndUpdate(req.params.id, req.body, { new: true })
+		.then((updatedBook) => {
+			console.log('Book updated successfully.');
+			res.status(200).json(updatedBook);
+		})
+		.catch((error) => {
+			console.error(`Could not update book: ${error}`);
 		});
 });
 
